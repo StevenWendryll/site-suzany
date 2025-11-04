@@ -1,0 +1,303 @@
+---
+// Caminho: src/layouts/LayoutBase.astro
+interface Props {
+    title: string;
+}
+const { title } = Astro.props;
+import whatsappIconCompleto from "../assets/whatsapp-completo.png";
+---
+
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title} | Dra. Fisioterapeuta</title>
+    </head>
+
+    <body class="bg-gray-50 min-h-screen flex flex-col">
+        <header class="bg-white shadow-md w-full sticky top-0 z-40">
+            <nav
+                class="container mx-auto p-4 flex justify-between items-center"
+            >
+                <a href="/" class="text-2xl font-bold text-blue-700">
+                    LogoDra
+                </a>
+
+                <button
+                    id="menu-btn"
+                    class="md:hidden p-2 rounded-lg hover:bg-gray-100"
+                    aria-label="Abrir menu"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+
+                <div class="hidden md:flex space-x-4">
+                    <a href="/" class="text-gray-700 hover:text-blue-700"
+                        >Home</a
+                    >
+                    <a href="/sobre" class="text-gray-700 hover:text-blue-700"
+                        >Sobre</a
+                    >
+                    <a
+                        href="/servicos"
+                        class="text-gray-700 hover:text-blue-700">Serviços</a
+                    >
+                    <a href="/blog" class="text-gray-700 hover:text-blue-700"
+                        >Blog</a
+                    >
+                    <a
+                        href="/depoimentos"
+                        class="text-gray-700 hover:text-blue-700">Depoimentos</a
+                    >
+                    <a href="/contato" class="text-gray-700 hover:text-blue-700"
+                        >Contato</a
+                    >
+                </div>
+            </nav>
+
+            <div id="menu-mobile" class="md:hidden hidden bg-white shadow-lg">
+                <a
+                    href="/"
+                    class="block text-gray-700 p-4 border-b hover:bg-gray-50"
+                    >Home</a
+                >
+                <a
+                    href="/sobre"
+                    class="block text-gray-700 p-4 border-b hover:bg-gray-50"
+                    >Sobre</a
+                >
+                <a
+                    href="/servicos"
+                    class="block text-gray-700 p-4 border-b hover:bg-gray-50"
+                    >Serviços</a
+                >
+                <a
+                    href="/blog"
+                    class="block text-gray-700 p-4 border-b hover:bg-gray-50"
+                    >Blog</a
+                >
+                <a
+                    href="/depoimentos"
+                    class="block text-gray-700 p-4 border-b hover:bg-gray-50"
+                    >Depoimentos</a
+                >
+                <a
+                    href="/contato"
+                    class="block text-gray-700 p-4 hover:bg-gray-50">Contato</a
+                >
+            </div>
+        </header>
+
+        <main class="container mx-auto p-4 flex-grow">
+            <slot />
+        </main>
+
+        <footer class="bg-gray-800 text-gray-300 p-8 md:p-12 mt-10">
+            <div
+                class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-4">
+                        Dra. Fisioterapeuta
+                    </h4>
+                    <p>Restaurando seu movimento e qualidade de vida.</p>
+                    <p class="mt-4">CREFITO: 123456-F</p>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-4">Links</h4>
+                    <nav class="flex flex-col space-y-2">
+                        <a href="/sobre" class="hover:text-white">Sobre</a>
+                        <a href="/servicos" class="hover:text-white">Serviços</a
+                        >
+                        <a href="/blog" class="hover:text-white">Blog</a>
+                        <a href="/depoimentos" class="hover:text-white"
+                            >Depoimentos</a
+                        >
+                        <a href="/contato" class="hover:text-white">Contato</a>
+                    </nav>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-4">
+                        Receba Novidades
+                    </h4>
+                    <p class="mb-4">
+                        Cadastre seu e-mail para receber nossos artigos.
+                    </p>
+                    <form
+                        action="https://formspree.io/f/xblpvanr"
+                        method="POST"
+                    >
+                        <input type="hidden" name="_next" value="/obrigado" />
+                        <input
+                            type="hidden"
+                            name="_subject"
+                            value="Nova Inscrição na Newsletter!"
+                        />
+                        <input type="hidden" name="_language" value="pt" />
+                        <label for="email_newsletter" class="sr-only"
+                            >Email</label
+                        >
+                        <input
+                            type="email"
+                            name="email"
+                            id="email_newsletter"
+                            placeholder="seu.email@exemplo.com"
+                            required
+                            class="w-full p-2 rounded bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500"
+                            autocomplete="email"
+                        />
+                        <button
+                            type="submit"
+                            class="w-full bg-blue-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-800 mt-2"
+                        >
+                            Inscrever
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm">
+                <p>
+                    © {new Date().getFullYear()} Dra. Fisioterapeuta. Todos os direitos
+                    reservados.
+                </p>
+                <a
+                    href="/politica-de-privacidade"
+                    class="underline hover:text-white mt-1"
+                >
+                    Política de Privacidade
+                </a>
+            </div>
+        </footer>
+
+        <a
+            href="https://wa.me/5528999998888?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="fixed bottom-5 right-5 z-50 transition-transform hover:scale-110"
+            aria-label="Abrir conversa no WhatsApp"
+        >
+            <img
+                src={whatsappIconCompleto.src}
+                alt="Abrir conversa no WhatsApp"
+                width="50"
+                height="50"
+                class="w-20 h-20"
+            />
+        </a>
+
+        <div
+            id="cookie-banner"
+            class="fixed bottom-0 left-0 w-full bg-gray-900 text-white p-4 flex-col md:flex-row justify-between items-center z-50 hidden"
+        >
+            <p class="text-sm mb-4 md:mb-0">
+                Este site usa cookies para garantir que você obtenha a melhor
+                experiência. Ao continuar, você concorda com nossa
+                <a
+                    href="/politica-de-privacidade"
+                    class="underline hover:text-gray-300"
+                    >Política de Privacidade</a
+                >.
+            </p>
+            <button
+                id="cookie-accept"
+                class="bg-blue-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-800"
+            >
+                Entendi
+            </button>
+        </div>
+
+        <script is:inline>
+            // 1. Crie uma função que contém nossa lógica
+            function setupCookieBanner() {
+                const banner = document.getElementById("cookie-banner");
+                const acceptButton = document.getElementById("cookie-accept");
+
+                // Se o banner não existir nesta página, saia
+                if (!banner) return;
+
+                // Verifica se o usuário JÁ aceitou
+                const consent = localStorage.getItem("cookieConsent");
+                if (consent === "true") {
+                    banner.style.display = "none"; // Garante que esteja escondido
+                    return; // Já aceitou, não faz mais nada
+                }
+
+                // Se não aceitou, mostra o banner
+                banner.style.display = "flex";
+
+                // Adiciona o clique APENAS se ainda não tiver sido adicionado
+                // (Isso evita múltiplos listeners)
+                if (acceptButton && !acceptButton.dataset.listenerAttached) {
+                    acceptButton.addEventListener("click", () => {
+                        localStorage.setItem("cookieConsent", "true");
+                        banner.style.display = "none";
+                    });
+                    acceptButton.dataset.listenerAttached = "true";
+                }
+            }
+
+            // 2. Chame a função no carregamento inicial da página
+            setupCookieBanner();
+
+            // 3. Chame a função NOVAMENTE em CADA navegação do Astro
+            document.addEventListener("astro:page-load", setupCookieBanner);
+        </script>
+
+        <script is:inline>
+            // Função para controlar o menu mobile
+            function setupMenu() {
+                const menuBtn = document.getElementById("menu-btn");
+                const menuMobile = document.getElementById("menu-mobile");
+
+                if (menuBtn && menuMobile) {
+                    // Se o botão de menu for clicado
+                    menuBtn.addEventListener("click", () => {
+                        // Adiciona ou remove a classe 'hidden' do menu mobile
+                        menuMobile.classList.toggle("hidden");
+                    });
+                }
+
+                // --- Bônus: Fechar o menu ao navegar ---
+                // Pega todos os links dentro do menu mobile
+                const mobileLinks = menuMobile.querySelectorAll("a");
+                mobileLinks.forEach((link) => {
+                    link.addEventListener("click", () => {
+                        // Esconde o menu quando um link é clicado
+                        menuMobile.classList.add("hidden");
+                    });
+                });
+            }
+
+            // 1. Chame a função no carregamento inicial
+            setupMenu();
+
+            // 2. Chame a função em CADA navegação (exatamente como o banner)
+            document.addEventListener("astro:page-load", setupMenu);
+        </script>
+
+        <script is:inline>
+            function setupCookieBanner() {
+                // ... (seu código do cookie banner que já funciona) ...
+            }
+            setupCookieBanner();
+            document.addEventListener("astro:page-load", setupCookieBanner);
+        </script>
+    </body>
+</html>

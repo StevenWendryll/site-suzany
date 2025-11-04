@@ -1,0 +1,47 @@
+---
+// Caminho: src/pages/depoimentos.astro
+import LayoutBase from "../layouts/LayoutBase.astro";
+import { client } from "../lib/sanityClient";
+
+type Depoimento = {
+    nome: string;
+    texto: string;
+};
+
+// Busca todos os depoimentos, ordenados pelos mais novos
+const query = `*[_type == "depoimento"] | order(_createdAt desc)`;
+const depoimentos = await client.fetch<Depoimento[]>(query);
+---
+
+<LayoutBase title="Depoimentos de Pacientes">
+    <h1 class="text-4xl font-bold text-blue-900 mb-8 text-center">
+        O que meus pacientes dizem
+    </h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+            depoimentos.map((depoimento) => (
+                <blockquote class="bg-white p-6 rounded-lg shadow-lg flex flex-col">
+                    {/* Ícone de Aspas (Estético) */}
+                    <svg
+                        class="w-10 h-10 text-blue-100 mb-4"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z" />
+                    </svg>
+
+                    <p class="text-gray-700 italic flex-grow mb-6">
+                        "{depoimento.texto}"
+                    </p>
+
+                    <footer class="text-right">
+                        <cite class="font-bold text-blue-800 not-italic">
+                            - {depoimento.nome}
+                        </cite>
+                    </footer>
+                </blockquote>
+            ))
+        }
+    </div>
+</LayoutBase>

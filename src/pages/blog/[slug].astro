@@ -1,0 +1,60 @@
+---
+// Caminho: src/pages/blog/[slug].astro
+import LayoutBase from "../../layouts/LayoutBase.astro";
+import { client } from "../../lib/sanityClient";
+// Lembre-se, já instalamos isso
+import { toHTML } from "@portabletext/to-html";
+
+// --- Parte A: getStaticPaths() ---
+
+type PostSlug = {
+    slug: { current: string };
+};
+
+export async function getStaticPaths() {
+    // 1. Busque APENAS os slugs de todos os posts (que têm slug)
+    const query = `*[_type == "post" && defined(slug.current)]{ slug }`;
+    const posts = await client.fetch<PostSlug[]>(query);
+
+    // 2. Retorne o array de 'paths' para o Astro
+    return posts.map((post) => ({
+        params: { slug: post.slug.current },
+    }));
+}
+
+// --- Parte B: Renderização da Página ---
+
+const { slug } = Astro.params;
+
+type PostCompleto = {
+    titulo: string;
+    conteudo: any; // O "rich text" (Portable Text) do blog
+};
+
+// 2. Busque os detalhes COMPLETOS do post atual
+const queryCompleta = `*[_type == "post" && slug.current == $slug][0]{ 
+titulo, 
+conteudo 
+}`;
+const post = await client.fetch<PostCompleto>(queryCompleta, { slug });
+
+// 3. Converta o "rich text" (conteudo) para HTML
+const conteudoHtml = toHTML(post.conteudo);
+---
+
+<LayoutBase title={post.titulo}>
+    {
+        /* A classe 'prose' do Tailwind é perfeita para formatar
+    HTML vindo de um CMS (como o seu blog).
+    'prose-blue' muda as cores dos links e títulos para azul.
+  */
+    }
+    <article
+        class="prose prose-lg lg:prose-xl prose-blue max-w-none bg-white p-8 md:p-12 rounded-lg shadow-md"
+    >
+        <h1>{post.titulo}</h1>
+
+        {/* RF 01 - Conteúdo do Artigo */}
+        <div set:html={conteudoHtml} />
+    </article>
+</LayoutBase>

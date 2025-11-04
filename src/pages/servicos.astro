@@ -1,0 +1,51 @@
+---
+// Caminho: src/pages/servicos.astro
+import LayoutBase from "../layouts/LayoutBase.astro";
+
+// Nossos tipos e cliente Sanity
+import { client } from "../lib/sanityClient";
+type Servico = {
+  titulo: string;
+  resumo: string;
+  slug: {
+    // Precisamos do slug para criar o link!
+    current: string;
+  };
+};
+
+// Atualizamos a query para buscar o 'slug'
+const query = `*[_type == "servico" && defined(slug.current)]{ 
+  titulo, 
+  resumo, 
+  slug 
+}`;
+const servicos = await client.fetch<Servico[]>(query);
+---
+
+<LayoutBase title="Nossos Tratamentos">
+  <h1 class="text-4xl font-bold text-blue-900 mb-8 text-center">
+    Conheça nossos Tratamentos
+  </h1>
+
+  {/* RF 01 - Página "mãe" que lista todos os serviços */}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {
+      servicos.map((servico) => (
+        <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col">
+          <h3 class="text-2xl font-bold text-blue-800 mb-3">
+            {servico.titulo}F
+          </h3>
+          <p class="text-gray-600 mb-6 flex-grow">{servico.resumo}</p>
+
+          {/* O link para a página de detalhes dinâmica! */}
+          <a
+            href={`/servicos/${servico.slug.current}/`}
+            class="bg-blue-700 text-white font-bold py-2 px-5 rounded-lg hover:bg-blue-800 text-center"
+          >
+            Saiba Mais
+          </a>
+        </div>
+      ))
+    }
+  </div>
+</LayoutBase>

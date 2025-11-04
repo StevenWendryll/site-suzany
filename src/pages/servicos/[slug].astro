@@ -1,0 +1,67 @@
+---
+// Caminho: src/pages/servicos/[slug].astro
+import LayoutBase from "../../layouts/LayoutBase.astro";
+import { client } from "../../lib/sanityClient";
+// 1. Importe a ferramenta que acabamos de instalar
+import { toHTML } from "@portabletext/to-html";
+
+// --- Parte A: getStaticPaths() ---
+// Esta função diz ao Astro quais páginas ele deve construir.
+// Ela roda UMA VEZ durante o "build".
+
+// Tipo para o 'slug'
+type ServicoSlug = {
+    slug: { current: string };
+};
+
+export async function getStaticPaths() {
+    // 1. Busque APENAS os slugs de todos os serviços
+    const query = `*[_type == "servico" && defined(slug.current)]{ slug }`;
+    const servicos = await client.fetch<ServicoSlug[]>(query);
+
+    // 2. Retorne um array de 'paths'
+    // O Astro vai mapear isso e gerar uma página para cada item
+    return servicos.map((servico) => ({
+        params: { slug: servico.slug.current }, // ex: { slug: 'pilates-clinico' }
+    }));
+}
+
+// --- Parte B: Renderização da Página ---
+// Esta parte roda para CADA página gerada.
+
+// O 'slug' vem dos 'params' que getStaticPaths definiu
+const { slug } = Astro.params;
+
+// Tipo para o serviço completo
+type ServicoCompleto = {
+    titulo: string;
+    descricaoCompleta: any; // O "rich text" do Sanity (Portable Text)
+};
+
+// 2. Busque os detalhes COMPLETOS de APENAS UM serviço (o desta página)
+const queryCompleta = `*[_type == "servico" && slug.current == $slug][0]{ 
+titulo, 
+descricaoCompleta 
+}`;
+const servico = await client.fetch<ServicoCompleto>(queryCompleta, { slug });
+
+// 3. Converta o "rich text" do Sanity (descricaoCompleta) para HTML
+const conteudoHtml = toHTML(servico.descricaoCompleta);
+---
+
+<LayoutBase title={servico.titulo}>
+    {
+        /* Classe 'prose' do Tailwind: formata automaticamente
+    parágrafos, listas, etc. vindos de um CMS. 
+  */
+    }
+    <article
+        class="prose prose-lg lg:prose-xl max-w-none bg-white p-8 rounded-lg shadow-md"
+    >
+        <h1 class="text-blue-900">{servico.titulo}</h1>
+
+        {/* RF 01 - Sub-página com descrição detalhada */}
+        {/* Setamos o HTML gerado, que é de uma fonte segura (nosso CMS) */}
+        <div set:html={conteudoHtml} />
+    </article>
+</LayoutBase>

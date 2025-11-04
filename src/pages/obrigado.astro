@@ -1,0 +1,23 @@
+---
+// Caminho: src/pages/obrigado.astro
+import LayoutBase from "../layouts/LayoutBase.astro";
+---
+
+<LayoutBase title="Obrigado!">
+    <section
+        class="text-center bg-white p-12 md:p-16 rounded-lg shadow-md max-w-2xl mx-auto"
+    >
+        <h1 class="text-4xl font-bold text-blue-900 mb-4">
+            Mensagem Recebida!
+        </h1>
+        <p class="text-lg text-gray-700 mb-8">
+            Obrigado por entrar em contato. Responderemos o mais breve possível.
+        </p>
+        <a
+            href="/"
+            class="bg-blue-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-800"
+        >
+            Voltar para a Página Inicial
+        </a>
+    </section>
+</LayoutBase>
