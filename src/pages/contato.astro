@@ -4,22 +4,36 @@ import LayoutBase from "../layouts/LayoutBase.astro";
 ---
 
 <LayoutBase title="Contato e Agendamento">
-    <h1 class="text-4xl font-bold text-blue-900 mb-8 text-center">
-        Entre em Contato
-    </h1>
+    <div
+        class="relative h-48 md:h-56 rounded-lg overflow-hidden bg-cover bg-center mb-8"
+        style="background-image: url('/images/hero-background.jpg');"
+    >
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <div
+            class="relative z-10 flex items-center justify-center h-full text-center p-4"
+        >
+            <h1 class="text-4xl font-bold text-white">Entre em Contato</h1>
+        </div>
+    </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* --- Coluna 1: Formulário --- */}
         <div class="bg-white p-8 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">
                 Agende sua avaliação
             </h2>
 
-            {/* RF 02 - Formulário de Pré-Agendamento (Opção A) */}
-            <form action="https://formspree.io/f/xqagvdnl" method="POST">
-                <input type="hidden" name="_next" value="/obrigado">
-                <input type="hidden" name="_subject" value="Novo Paciente (Contato do Site)">
-                <input type="hidden" name="_language" value="pt">
+            <form
+                action="https://formspree.io/f/xqagvdnl"
+                method="POST"
+            >
+                <input type="hidden" name="_next" value="/obrigado" />
+                <input
+                    type="hidden"
+                    name="_subject"
+                    value="Novo Paciente (Contato do Site)"
+                />
+                <input type="hidden" name="_language" value="pt" />
+
                 <div class="mb-4">
                     <label class="block text-gray-700 font-bold mb-2" for="name"
                         >Nome</label
@@ -73,12 +87,9 @@ import LayoutBase from "../layouts/LayoutBase.astro";
                         id="message"
                         name="message"
                         required
-                        autocomplete="off"
-                    ></textarea>
-
+                        autocomplete="off"></textarea>
                 </div>
 
-                {/* RNF 03 - Requisito da LGPD */}
                 <div class="mb-6">
                     <label class="flex items-center">
                         <input type="checkbox" class="mr-2" required />
@@ -97,9 +108,7 @@ import LayoutBase from "../layouts/LayoutBase.astro";
             </form>
         </div>
 
-        {/* --- Coluna 2: Informações de Contato --- */}
         <div class="space-y-6">
-            {/* RF 01 - Informações Claras */}
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h3 class="text-xl font-bold text-blue-800 mb-3">
                     Informações
@@ -118,8 +127,6 @@ import LayoutBase from "../layouts/LayoutBase.astro";
                     Rua Exemplo, 123, Bairro, Cidade - ES
                 </p>
             </div>
-
-            {/* RF 01 - Mapa Incorporado */}
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59676.38757326853!2d-40.68094498873008!3d-20.800420032600694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xb8fd6039a98b97%3A0x373ef608b9c655a0!2sAnchieta%2C%20ES%2C%2029230-000!5e0!3m2!1spt-BR!2sbr!4v1762222799507!5m2!1spt-BR!2sbr"

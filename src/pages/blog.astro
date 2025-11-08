@@ -1,20 +1,14 @@
 ---
 // Caminho: src/pages/blog.astro
 import LayoutBase from "../layouts/LayoutBase.astro";
-
-// MUDANÇA 1: Importe 'urlFor' junto com o 'client'
 import { client, urlFor } from "../lib/sanityClient";
 
 type Post = {
     titulo: string;
-    slug: {
-        current: string;
-    };
+    slug: { current: string };
     resumo: string;
-    imagemCapa: any; // Vamos receber o objeto da imagem
+    imagemCapa: any;
 };
-
-// MUDANÇA 2: Adicione 'imagemCapa' à sua query
 const query = `*[_type == "post" && defined(slug.current)] | order(_createdAt desc) { 
   titulo, 
   slug,
@@ -25,18 +19,22 @@ const posts = await client.fetch<Post[]>(query);
 ---
 
 <LayoutBase title="Blog e Artigos">
-    <h1 class="text-4xl font-bold text-blue-900 mb-8 text-center">
-        Blog e Artigos
-    </h1>
-    <p class="text-lg text-gray-700 text-center mb-12">
-        Educando sobre saúde e movimento: seu guia de fisioterapia e bem-estar.
-    </p>
+    <div
+        class="relative h-48 md:h-56 rounded-lg overflow-hidden bg-cover bg-center mb-8"
+        style="background-image: url('/images/blog-background.jpg');"
+    >
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <div
+            class="relative z-10 flex flex-col items-center justify-center h-full text-center p-4"
+        >
+            <h1 class="text-4xl font-bold text-white">Blog e Artigos</h1>
+        </div>
+    </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {
             posts.map((post) => (
                 <article class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
-                    {/* MUDANÇA 3: Substitua o <div> por uma <img> real (com uma verificação) */}
                     {post.imagemCapa ? (
                         <img
                             src={urlFor(post.imagemCapa)
@@ -50,7 +48,6 @@ const posts = await client.fetch<Post[]>(query);
                     ) : (
                         <div class="bg-gray-200 h-48 w-full" />
                     )}
-
                     <div class="p-6 flex flex-col flex-grow">
                         <h2 class="text-2xl font-bold text-blue-800 mb-3">
                             {post.titulo}
@@ -58,7 +55,6 @@ const posts = await client.fetch<Post[]>(query);
                         <p class="text-gray-600 mb-6 flex-grow">
                             {post.resumo}
                         </p>
-
                         <a
                             href={`/blog/${post.slug.current}/`}
                             class="mt-auto bg-blue-700 text-white font-bold py-2 px-5 rounded-lg hover:bg-blue-800 text-center"
@@ -69,7 +65,12 @@ const posts = await client.fetch<Post[]>(query);
                 </article>
             ))
         }
-
-        {/* ... (resto do arquivo) ... */}
+        {
+            posts.length === 0 && (
+                <p class="text-center text-gray-500 col-span-full">
+                    Nenhum artigo publicado ainda. Volte em breve!
+                </p>
+            )
+        }
     </div>
 </LayoutBase>
