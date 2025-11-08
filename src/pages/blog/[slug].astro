@@ -52,7 +52,7 @@ const conteudoHtml = toHTML(post.conteudo);
     <article
         class="prose prose-lg lg:prose-xl prose-blue max-w-none bg-white p-8 md:p-12 rounded-lg shadow-md"
     >
-        <h1>{post.titulo}</h1>
+        <h1 class="text-3xl mb-6">{post.titulo}</h1>
 
         {/* RF 01 - Conteúdo do Artigo */}
         <div set:html={conteudoHtml} />
