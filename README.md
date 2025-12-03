@@ -122,7 +122,7 @@ Este é o guia de como você (ou sua cliente) irá gerenciar o conteúdo do site
       * **Descrição Completa:** O conteúdo principal da página de detalhes. Use as ferramentas para criar listas, negrito, etc. (RNF 04).
 4. Quando terminar, clique no botão verde **"Publish"** (Publicar) no canto inferior.
 
-### Como Adicionar/Editar um Post do Blog (RF 01)
+### Como Adicionar/Editar um Post do Blog
 
 1. No menu à esquerda, clique em **"Post do Blog"**.
 2. Preencha os campos:
@@ -132,7 +132,7 @@ Este é o guia de como você (ou sua cliente) irá gerenciar o conteúdo do site
       * **Imagem de Capa:** Faça o upload da imagem que aparecerá no topo do post e no card da lista do blog.
 3. Clique em **"Publish"**.
 
-### Como Adicionar/Editar um Depoimento (RF 01)
+### Como Adicionar/Editar um Depoimento
 
 1. No menu à esquerda, clique em **"Depoimento"**.
 2. Preencha os campos:
