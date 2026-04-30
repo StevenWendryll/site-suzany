@@ -4,9 +4,9 @@ import LayoutBase from "../layouts/LayoutBase.astro";
 import { client } from "../lib/sanityClient";
 
 type Servico = {
-  titulo: string;
-  resumo: string;
-  slug: { current: string };
+titulo: string;
+resumo: string;
+slug: { current: string };
 };
 const query = `*[_type == "servico" && defined(slug.current)]{ titulo, resumo, slug }`;
 const servicos = await client.fetch<Servico[]>(query);
@@ -61,6 +61,7 @@ const servicos = await client.fetch<Servico[]>(query);
 	.servicos-intro {
 		max-width: 640px;
 		margin: 0 0 2.5rem;
+		text-align: center;
 	}
 
 	.servicos-intro p {
