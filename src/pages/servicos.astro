@@ -8,36 +8,179 @@ type Servico = {
   resumo: string;
   slug: { current: string };
 };
-// Filtro para garantir que o slug exista
 const query = `*[_type == "servico" && defined(slug.current)]{ titulo, resumo, slug }`;
 const servicos = await client.fetch<Servico[]>(query);
 ---
 
 <LayoutBase title="Nossos Tratamentos">
-  <div
-    class="relative h-48 md:h-56 rounded-lg overflow-hidden bg-cover bg-center mb-8"
-    style="background-image: url('/images/servico-background.jpg');"
-  >
-    <div class="absolute inset-0 bg-black opacity-40"></div>
-    <div class="relative z-10 flex items-center justify-center text-center h-full">
-      <h1 class="text-4xl font-bold text-white">Nossos Tratamentos</h1>
-    </div>
-  </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    {
-      servicos.map((servico) => (
-        <div class="bg-white p-8 rounded-lg shadow-lg flex flex-col">
-          <h3 class="text-xl font-bold text-blue-800 mb-3">{servico.titulo}</h3>
-          <p class="text-gray-600 mb-6 flex-grow">{servico.resumo}</p>
-          <a
-            href={`/servicos/${servico.slug.current}/`}
-            class="bg-blue-700 text-white font-bold py-2 px-5 rounded-lg hover:bg-blue-800 text-center"
-          >
-            Saiba Mais
-          </a>
-        </div>
-      ))
-    }
-  </div>
+	<div class="page-hero">
+		<div class="page-hero-bg">
+			<img src="/images/servico-background.jpg" alt="" loading="lazy" />
+		</div>
+		<div class="page-hero-content">
+			<span class="page-hero-label">O que oferecemos</span>
+			<h1 class="page-hero-title">Nossos Tratamentos</h1>
+		</div>
+	</div>
+
+	<section class="servicos-intro" aria-label="Introdução">
+		<p>
+			Cada paciente recebe um plano terapêutico personalizado, baseado em avaliação detalhada e
+			técnicas com respaldo científico. Conheça os tratamentos disponíveis:
+		</p>
+	</section>
+
+	<ul class="servicos-lista" role="list">
+		{servicos.map((s, i) => (
+			<li class="servico-item" style={`--i:${i}`}>
+				<div class="servico-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</div>
+				<div class="servico-body">
+					<h2 class="servico-titulo">{s.titulo}</h2>
+					<p class="servico-resumo">{s.resumo}</p>
+				</div>
+				<a
+					href={`/servicos/${s.slug.current}/`}
+					class="servico-link"
+					aria-label={`Saiba mais sobre ${s.titulo}`}
+				>
+					<span>Saiba Mais</span>
+					<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+				</a>
+			</li>
+		))}
+	</ul>
+
+	<div class="servicos-cta">
+		<p>Não encontrou o que procura? Entre em contato — podemos ajudar.</p>
+		<a href="/contato" class="btn-primary">Falar com a Dra. Suzany</a>
+	</div>
 </LayoutBase>
+
+<style>
+	.servicos-intro {
+		max-width: 640px;
+		margin: 0 0 2.5rem;
+	}
+
+	.servicos-intro p {
+		font-size: 1.05rem;
+		color: var(--texto-muted);
+		line-height: 1.75;
+	}
+
+	/* Lista estilo editorial */
+	.servicos-lista {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+		border: 1px solid var(--borda);
+		border-radius: var(--raio-xl);
+		overflow: hidden;
+		background: var(--branco);
+		box-shadow: var(--sombra-sm);
+		margin-bottom: 3rem;
+	}
+
+	.servico-item {
+		display: grid;
+		grid-template-columns: 64px 1fr auto;
+		align-items: center;
+		gap: 1.5rem;
+		padding: 1.75rem 2rem;
+		border-bottom: 1px solid var(--borda);
+		transition: background var(--dur) var(--ease);
+		opacity: 0;
+		animation: slideIn 0.4s var(--ease) forwards;
+		animation-delay: calc(var(--i, 0) * 70ms + 80ms);
+	}
+
+	.servico-item:last-child { border-bottom: none; }
+
+	.servico-item:hover { background: var(--verde-suave); }
+
+	@keyframes slideIn {
+		from { opacity: 0; transform: translateX(-12px); }
+		to   { opacity: 1; transform: translateX(0); }
+	}
+
+	@media (max-width: 600px) {
+		.servico-item {
+			grid-template-columns: 48px 1fr;
+			grid-template-rows: auto auto;
+		}
+		.servico-link { grid-column: 2; }
+	}
+
+	.servico-num {
+		font-family: var(--fonte-serif);
+		font-size: 1.6rem;
+		font-weight: 700;
+		color: var(--borda);
+		line-height: 1;
+		text-align: right;
+		flex-shrink: 0;
+		transition: color var(--dur) var(--ease);
+	}
+
+	.servico-item:hover .servico-num { color: var(--verde-mid); }
+
+	.servico-titulo {
+		font-family: var(--fonte-serif);
+		font-size: 1.2rem;
+		font-weight: 700;
+		color: var(--texto);
+		margin-bottom: 0.35rem;
+		line-height: 1.2;
+	}
+
+	.servico-resumo {
+		font-size: 0.9rem;
+		color: var(--texto-muted);
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	.servico-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		background: var(--verde-suave);
+		color: var(--verde);
+		font-size: 0.85rem;
+		font-weight: 600;
+		text-decoration: none;
+		padding: 10px 18px;
+		border-radius: 100px;
+		white-space: nowrap;
+		border: 1px solid var(--verde-mid);
+		transition: background var(--dur) var(--ease), color var(--dur) var(--ease), transform var(--dur) var(--ease);
+		flex-shrink: 0;
+	}
+
+	.servico-item:hover .servico-link {
+		background: var(--verde);
+		color: var(--branco);
+		border-color: var(--verde);
+		transform: translateX(3px);
+	}
+
+	/* CTA */
+	.servicos-cta {
+		background: var(--creme-escuro);
+		border: 1px solid var(--borda);
+		border-radius: var(--raio-lg);
+		padding: 2rem;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.servicos-cta p {
+		color: var(--texto-muted);
+		font-size: 0.95rem;
+	}
+</style>

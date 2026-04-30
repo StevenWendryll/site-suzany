@@ -10,281 +10,625 @@ import whatsappIconCompleto from "../assets/whatsapp-completo.png";
 <html lang="pt-br">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="generator" content={Astro.generator} />
         <title>{title} | Dra. Suzany Figueredo Lorencini</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap"
+            rel="stylesheet"
+        />
     </head>
 
-    <body class="bg-gray-50 min-h-screen flex flex-col">
-        <header class="bg-white shadow-md w-full sticky top-0 z-40">
-            <nav
-                class="container mx-auto p-4 flex justify-between items-center"
-            >
-                <a href="/" class="text-2xl font-bold text-blue-700">
-                    Dra. Suzany Figueredo Lorencini
+    <body>
+        <!-- ══════════════ HEADER ══════════════ -->
+        <header class="site-header" id="site-header">
+            <nav class="nav-inner">
+                <a href="/" class="nav-logo" aria-label="Página inicial">
+                    <span class="logo-name">Dra. Suzany</span>
+                    <span class="logo-sub">Figueredo Lorencini · Fisioterapeuta</span>
                 </a>
+
+                <div class="nav-links" id="nav-links">
+                    <a href="/" class="nav-link">Início</a>
+                    <a href="/sobre" class="nav-link">Sobre</a>
+                    <a href="/servicos" class="nav-link">Serviços</a>
+                    <a href="/blog" class="nav-link">Blog</a>
+                    <a href="/depoimentos" class="nav-link">Depoimentos</a>
+                    <a href="/contato" class="nav-cta">Agendar</a>
+                </div>
 
                 <button
                     id="menu-btn"
-                    class="md:hidden p-2 rounded-lg hover:bg-gray-100"
+                    class="menu-toggle"
                     aria-label="Abrir menu"
+                    aria-expanded="false"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
+                    <span class="toggle-bar"></span>
+                    <span class="toggle-bar"></span>
+                    <span class="toggle-bar"></span>
                 </button>
-
-                <div class="hidden md:flex space-x-4">
-                    <a href="/" class="text-gray-700 hover:text-blue-700"
-                        >Início</a
-                    >
-                    <a href="/sobre" class="text-gray-700 hover:text-blue-700"
-                        >Sobre</a
-                    >
-                    <a
-                        href="/servicos"
-                        class="text-gray-700 hover:text-blue-700">Serviços</a
-                    >
-                    <a href="/blog" class="text-gray-700 hover:text-blue-700"
-                        >Blog</a
-                    >
-                    <a
-                        href="/depoimentos"
-                        class="text-gray-700 hover:text-blue-700">Depoimentos</a
-                    >
-                    <a href="/contato" class="text-gray-700 hover:text-blue-700"
-                        >Contato</a
-                    >
-                </div>
             </nav>
 
-            <div id="menu-mobile" class="md:hidden hidden bg-white shadow-lg">
-                <a
-                    href="/"
-                    class="block text-gray-700 p-4 border-b hover:bg-gray-50"
-                    >Início</a
-                >
-                <a
-                    href="/sobre"
-                    class="block text-gray-700 p-4 border-b hover:bg-gray-50"
-                    >Sobre</a
-                >
-                <a
-                    href="/servicos"
-                    class="block text-gray-700 p-4 border-b hover:bg-gray-50"
-                    >Serviços</a
-                >
-                <a
-                    href="/blog"
-                    class="block text-gray-700 p-4 border-b hover:bg-gray-50"
-                    >Blog</a
-                >
-                <a
-                    href="/depoimentos"
-                    class="block text-gray-700 p-4 border-b hover:bg-gray-50"
-                    >Depoimentos</a
-                >
-                <a
-                    href="/contato"
-                    class="block text-gray-700 p-4 hover:bg-gray-50">Contato</a
-                >
+            <!-- Menu mobile -->
+            <div class="mobile-menu" id="menu-mobile" aria-hidden="true">
+                <a href="/" class="mobile-link">Início</a>
+                <a href="/sobre" class="mobile-link">Sobre</a>
+                <a href="/servicos" class="mobile-link">Serviços</a>
+                <a href="/blog" class="mobile-link">Blog</a>
+                <a href="/depoimentos" class="mobile-link">Depoimentos</a>
+                <a href="/contato" class="mobile-link mobile-cta">Agendar Consulta</a>
             </div>
         </header>
 
-        <main class="container mx-auto p-4 flex-grow">
+        <main class="site-main">
             <slot />
         </main>
 
-        <footer class="bg-gray-800 text-gray-300 p-8 md:p-12 mt-10">
-            <div
-                class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8"
-            >
-                <div>
-                    <h4 class="text-xl font-bold text-white mb-4">
-                        Dra. Suzany Figueredo Lorencini
-                    </h4>
-                    <p>Restaurando seu movimento e qualidade de vida.</p>
-                    <p class="mt-4">CREFITO: 449069-F</p>
+        <!-- ══════════════ FOOTER ══════════════ -->
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <p class="footer-logo">Dra. Suzany Figueredo Lorencini</p>
+                    <p class="footer-tagline">Restaurando seu movimento e qualidade de vida.</p>
+                    <p class="footer-crefito">CREFITO: 449069-F</p>
                 </div>
 
-                <div>
-                    <h4 class="text-xl font-bold text-white mb-4">Links</h4>
-                    <nav class="flex flex-col space-y-2">
-                        <a href="/sobre" class="hover:text-white">Sobre</a>
-                        <a href="/servicos" class="hover:text-white">Serviços</a
-                        >
-                        <a href="/blog" class="hover:text-white">Blog</a>
-                        <a href="/depoimentos" class="hover:text-white"
-                            >Depoimentos</a
-                        >
-                        <a href="/contato" class="hover:text-white">Contato</a>
+                <div class="footer-col">
+                    <h4 class="footer-heading">Navegação</h4>
+                    <nav class="footer-nav">
+                        <a href="/sobre">Sobre</a>
+                        <a href="/servicos">Serviços</a>
+                        <a href="/blog">Blog</a>
+                        <a href="/depoimentos">Depoimentos</a>
+                        <a href="/contato">Contato</a>
                     </nav>
                 </div>
 
-                <div>
-                    <h4 class="text-xl font-bold text-white mb-4">
-                        Contato
-                    </h4>
-                    <p>
-                        <strong>Endereço:</strong> Anchieta - ES
-                    </p>
-                    <p class="mt-2">
-                        <strong>Telefone:</strong>
-                        <a
-                            href="tel:+5528999249583"
-                            class="hover:text-white"
-                            >(28) 99924-9583</a
-                        >
-                    </p>
-                    <p class="mt-2">
-                        <strong>Email:</strong>
-                        <a
-                            href="mailto:suzanyflorencini@gmail.com"
-                            class="hover:text-white"
-                        >
-                            suzanyflorencini@gmail.com
-                        </a>
-                    </p>
+                <div class="footer-col">
+                    <h4 class="footer-heading">Contato</h4>
+                    <div class="footer-contacts">
+                        <p>📍 Anchieta – ES</p>
+                        <p>
+                            <a href="tel:+5528999249583">(28) 99924-9583</a>
+                        </p>
+                        <p>
+                            <a href="mailto:suzanyflorencini@gmail.com">suzanyflorencini@gmail.com</a>
+                        </p>
+                        <p>Seg – Sex · 8h às 18h</p>
+                    </div>
                 </div>
             </div>
-            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm">
-                <p>
-                    © {new Date().getFullYear()} Dra. Suzany Figueredo Lorencini. Todos os direitos
-                    reservados.
-                </p>
-                <a
-                    href="/politica-de-privacidade"
-                    class="underline hover:text-white mt-1"
-                >
-                    Política de Privacidade
-                </a>
+
+            <div class="footer-bottom">
+                <p>© {new Date().getFullYear()} Dra. Suzany Figueredo Lorencini. Todos os direitos reservados.</p>
+                <a href="/politica-de-privacidade">Política de Privacidade</a>
             </div>
         </footer>
 
+        <!-- WhatsApp flutuante -->
         <a
             href="https://wa.me/5528999249583?text=Olá!%20Gostaria%20de%20agendar%20uma%20avaliação."
             target="_blank"
             rel="noopener noreferrer"
-            class="fixed bottom-5 right-5 z-50 transition-transform hover:scale-110"
+            class="whatsapp-fab"
             aria-label="Abrir conversa no WhatsApp"
         >
             <img
                 src={whatsappIconCompleto.src}
-                alt="Abrir conversa no WhatsApp"
-                width="50"
-                height="50"
-                class="w-20 h-20"
+                alt=""
+                width="56"
+                height="56"
             />
         </a>
 
-        <div
-            id="cookie-banner"
-            class="fixed bottom-0 left-0 w-full bg-gray-900 text-white p-4 flex-col md:flex-row justify-between items-center z-50 hidden"
-        >
-            <p class="text-sm mb-4 md:mb-0">
-                Este site usa cookies para garantir que você obtenha a melhor
-                experiência. Ao continuar, você concorda com nossa
-                <a
-                    href="/politica-de-privacidade"
-                    class="underline hover:text-gray-300"
-                    >Política de Privacidade</a
-                >.
+        <!-- Cookie banner -->
+        <div id="cookie-banner" class="cookie-banner" role="region" aria-label="Aviso de cookies" hidden>
+            <p>
+                Este site usa cookies para garantir a melhor experiência. Ao continuar, você concorda com nossa
+                <a href="/politica-de-privacidade">Política de Privacidade</a>.
             </p>
-            <button
-                id="cookie-accept"
-                class="bg-blue-700 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-800"
-            >
-                Entendi
-            </button>
+            <button id="cookie-accept" class="cookie-btn">Aceitar</button>
         </div>
 
         <script is:inline>
-            // 1. Crie uma função que contém nossa lógica
             function setupCookieBanner() {
                 const banner = document.getElementById("cookie-banner");
-                const acceptButton = document.getElementById("cookie-accept");
-
-                // Se o banner não existir nesta página, saia
+                const btn = document.getElementById("cookie-accept");
                 if (!banner) return;
-
-                // Verifica se o usuário JÁ aceitou
-                const consent = localStorage.getItem("cookieConsent");
-                if (consent === "true") {
-                    banner.style.display = "none"; // Garante que esteja escondido
-                    return; // Já aceitou, não faz mais nada
+                if (localStorage.getItem("cookieConsent") === "true") {
+                    banner.hidden = true;
+                    return;
                 }
-
-                // Se não aceitou, mostra o banner
-                banner.style.display = "flex";
-
-                // Adiciona o clique APENAS se ainda não tiver sido adicionado
-                // (Isso evita múltiplos listeners)
-                if (acceptButton && !acceptButton.dataset.listenerAttached) {
-                    acceptButton.addEventListener("click", () => {
+                banner.hidden = false;
+                if (btn && !btn.dataset.listenerAttached) {
+                    btn.addEventListener("click", () => {
                         localStorage.setItem("cookieConsent", "true");
-                        banner.style.display = "none";
+                        banner.hidden = true;
                     });
-                    acceptButton.dataset.listenerAttached = "true";
+                    btn.dataset.listenerAttached = "true";
                 }
             }
-
-            // 2. Chame a função no carregamento inicial da página
             setupCookieBanner();
-
-            // 3. Chame a função NOVAMENTE em CADA navegação do Astro
             document.addEventListener("astro:page-load", setupCookieBanner);
         </script>
 
         <script is:inline>
-            // Função para controlar o menu mobile
             function setupMenu() {
-                const menuBtn = document.getElementById("menu-btn");
-                const menuMobile = document.getElementById("menu-mobile");
+                const btn = document.getElementById("menu-btn");
+                const menu = document.getElementById("menu-mobile");
+                const header = document.getElementById("site-header");
+                if (!btn || !menu) return;
 
-                if (menuBtn && menuMobile) {
-                    // Se o botão de menu for clicado
-                    menuBtn.addEventListener("click", () => {
-                        // Adiciona ou remove a classe 'hidden' do menu mobile
-                        menuMobile.classList.toggle("hidden");
-                    });
-                }
+                btn.addEventListener("click", () => {
+                    const open = menu.classList.toggle("is-open");
+                    btn.setAttribute("aria-expanded", open ? "true" : "false");
+                    menu.setAttribute("aria-hidden", open ? "false" : "true");
+                });
 
-                // --- Bônus: Fechar o menu ao navegar ---
-                // Pega todos os links dentro do menu mobile
-                const mobileLinks = menuMobile.querySelectorAll("a");
-                mobileLinks.forEach((link) => {
+                menu.querySelectorAll("a").forEach((link) => {
                     link.addEventListener("click", () => {
-                        // Esconde o menu quando um link é clicado
-                        menuMobile.classList.add("hidden");
+                        menu.classList.remove("is-open");
+                        btn.setAttribute("aria-expanded", "false");
+                        menu.setAttribute("aria-hidden", "true");
                     });
                 });
+
+                // Scroll effect no header
+                const onScroll = () => {
+                    header?.classList.toggle("scrolled", window.scrollY > 20);
+                };
+                window.addEventListener("scroll", onScroll, { passive: true });
+                onScroll();
             }
-
-            // 1. Chame a função no carregamento inicial
             setupMenu();
-
-            // 2. Chame a função em CADA navegação (exatamente como o banner)
             document.addEventListener("astro:page-load", setupMenu);
         </script>
 
-        <script is:inline>
-            function setupCookieBanner() {
-                // ... (seu código do cookie banner que já funciona) ...
+        <style is:global>
+            /* ── Reset e Base ── */
+            *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+            :root {
+                --verde:       #2d7a5f;
+                --verde-claro: #3a9975;
+                --verde-suave: #edf7f3;
+                --verde-mid:   #c8e8de;
+                --creme:       #faf8f5;
+                --creme-escuro:#f0ede8;
+                --texto:       #1a1f2e;
+                --texto-muted: #6b7280;
+                --borda:       #e5e0d8;
+                --branco:      #ffffff;
+                --fonte-serif: "Cormorant Garamond", Georgia, serif;
+                --fonte-sans:  "DM Sans", system-ui, sans-serif;
+                --raio:        12px;
+                --raio-lg:     20px;
+                --raio-xl:     28px;
+                --sombra-sm:   0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+                --sombra-md:   0 2px 8px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.08);
+                --sombra-lg:   0 4px 16px rgba(0,0,0,0.08), 0 24px 56px rgba(0,0,0,0.12);
+                --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+                --dur:         0.22s;
             }
-            setupCookieBanner();
-            document.addEventListener("astro:page-load", setupCookieBanner);
-        </script>
+
+            html {
+                scroll-behavior: smooth;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            body {
+                font-family: var(--fonte-sans);
+                background: var(--creme);
+                color: var(--texto);
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                line-height: 1.6;
+            }
+
+            img { display: block; max-width: 100%; }
+            a { color: inherit; }
+
+            /* ── HEADER ── */
+            .site-header {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                background: rgba(250, 248, 245, 0.92);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-bottom: 1px solid transparent;
+                transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+            }
+
+            .site-header.scrolled {
+                border-bottom-color: var(--borda);
+                box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            }
+
+            .nav-inner {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 clamp(1rem, 4vw, 2rem);
+                height: 68px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 2rem;
+            }
+
+            .nav-logo {
+                display: flex;
+                flex-direction: column;
+                text-decoration: none;
+                flex-shrink: 0;
+            }
+
+            .logo-name {
+                font-family: var(--fonte-serif);
+                font-size: 1.3rem;
+                font-weight: 700;
+                color: var(--verde);
+                line-height: 1.1;
+                letter-spacing: -0.01em;
+            }
+
+            .logo-sub {
+                font-size: 0.65rem;
+                font-weight: 400;
+                color: var(--texto-muted);
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                margin-top: 2px;
+            }
+
+            .nav-links {
+                display: none;
+                align-items: center;
+                gap: 0.25rem;
+            }
+
+            @media (min-width: 900px) {
+                .nav-links { display: flex; }
+                .menu-toggle { display: none; }
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+                font-weight: 500;
+                color: var(--texto-muted);
+                text-decoration: none;
+                padding: 8px 12px;
+                border-radius: 8px;
+                transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+            }
+
+            .nav-link:hover {
+                color: var(--texto);
+                background: var(--creme-escuro);
+            }
+
+            .nav-cta {
+                font-size: 0.88rem;
+                font-weight: 600;
+                color: var(--branco);
+                background: var(--verde);
+                text-decoration: none;
+                padding: 9px 20px;
+                border-radius: 100px;
+                margin-left: 0.5rem;
+                transition: background var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+                box-shadow: 0 2px 10px rgba(45, 122, 95, 0.35);
+            }
+
+            .nav-cta:hover {
+                background: var(--verde-claro);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(45, 122, 95, 0.45);
+            }
+
+            /* Hamburger */
+            .menu-toggle {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 8px;
+                border-radius: 8px;
+                transition: background var(--dur) var(--ease);
+            }
+
+            .menu-toggle:hover { background: var(--creme-escuro); }
+
+            .toggle-bar {
+                display: block;
+                width: 22px;
+                height: 2px;
+                background: var(--texto);
+                border-radius: 2px;
+                transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+            }
+
+            /* Mobile menu */
+            .mobile-menu {
+                display: none;
+                flex-direction: column;
+                padding: 0.75rem 1rem 1.25rem;
+                border-top: 1px solid var(--borda);
+                background: var(--creme);
+            }
+
+            .mobile-menu.is-open { display: flex; }
+
+            .mobile-link {
+                font-size: 0.95rem;
+                font-weight: 500;
+                color: var(--texto-muted);
+                text-decoration: none;
+                padding: 12px 8px;
+                border-bottom: 1px solid var(--borda);
+                transition: color var(--dur) var(--ease);
+            }
+
+            .mobile-link:last-child { border-bottom: none; }
+            .mobile-link:hover { color: var(--verde); }
+
+            .mobile-cta {
+                margin-top: 0.75rem;
+                text-align: center;
+                background: var(--verde);
+                color: var(--branco) !important;
+                border-radius: var(--raio);
+                border: none;
+                font-weight: 600;
+                padding: 14px 8px;
+            }
+
+            /* ── MAIN ── */
+            .site-main {
+                flex: 1;
+                max-width: 1200px;
+                width: 100%;
+                margin: 0 auto;
+                padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 4vw, 2rem);
+            }
+
+            /* ── FOOTER ── */
+            .site-footer {
+                background: var(--texto);
+                color: rgba(255,255,255,0.65);
+                margin-top: 4rem;
+            }
+
+            .footer-inner {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem) 3rem;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            @media (min-width: 640px) {
+                .footer-inner { grid-template-columns: 2fr 1fr 1fr; }
+            }
+
+            .footer-logo {
+                font-family: var(--fonte-serif);
+                font-size: 1.25rem;
+                font-weight: 700;
+                color: var(--branco);
+                margin-bottom: 0.5rem;
+            }
+
+            .footer-tagline {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-bottom: 0.5rem;
+            }
+
+            .footer-crefito {
+                font-size: 0.8rem;
+                opacity: 0.5;
+            }
+
+            .footer-heading {
+                font-size: 0.72rem;
+                font-weight: 600;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: rgba(255,255,255,0.35);
+                margin-bottom: 1rem;
+            }
+
+            .footer-nav {
+                display: flex;
+                flex-direction: column;
+                gap: 0.6rem;
+            }
+
+            .footer-nav a, .footer-contacts a {
+                text-decoration: none;
+                font-size: 0.9rem;
+                transition: color var(--dur) var(--ease);
+            }
+
+            .footer-nav a:hover, .footer-contacts a:hover {
+                color: var(--branco);
+            }
+
+            .footer-contacts {
+                display: flex;
+                flex-direction: column;
+                gap: 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .footer-bottom {
+                border-top: 1px solid rgba(255,255,255,0.08);
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 1.5rem clamp(1rem, 4vw, 2rem);
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0.75rem;
+                font-size: 0.8rem;
+            }
+
+            .footer-bottom a {
+                text-decoration: underline;
+                opacity: 0.6;
+                transition: opacity var(--dur) var(--ease);
+            }
+
+            .footer-bottom a:hover { opacity: 1; }
+
+            /* ── WhatsApp FAB ── */
+            .whatsapp-fab {
+                position: fixed;
+                bottom: 1.5rem;
+                right: 1.5rem;
+                z-index: 90;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+                filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));
+            }
+
+            .whatsapp-fab:hover {
+                transform: scale(1.08);
+                filter: drop-shadow(0 6px 20px rgba(0,0,0,0.24));
+            }
+
+            .whatsapp-fab img { width: 60px; height: 60px; }
+
+            /* ── Cookie Banner ── */
+            .cookie-banner {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 200;
+                background: rgba(26, 31, 46, 0.97);
+                backdrop-filter: blur(12px);
+                color: rgba(255,255,255,0.82);
+                padding: 1.25rem clamp(1rem, 4vw, 2rem);
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                font-size: 0.88rem;
+                line-height: 1.5;
+            }
+
+            .cookie-banner[hidden] { display: none; }
+
+            .cookie-banner p { flex: 1; min-width: 200px; }
+
+            .cookie-banner a {
+                color: var(--verde-claro);
+                text-decoration: underline;
+            }
+
+            .cookie-btn {
+                background: var(--verde);
+                color: var(--branco);
+                border: none;
+                font-family: var(--fonte-sans);
+                font-size: 0.88rem;
+                font-weight: 600;
+                padding: 10px 24px;
+                border-radius: 100px;
+                cursor: pointer;
+                white-space: nowrap;
+                transition: background var(--dur) var(--ease);
+            }
+
+            .cookie-btn:hover { background: var(--verde-claro); }
+
+            /* ── Utilitários globais ── */
+            .page-hero {
+                position: relative;
+                height: clamp(180px, 25vw, 280px);
+                border-radius: var(--raio-xl);
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 2.5rem;
+                background: var(--texto);
+            }
+
+            .page-hero-bg {
+                position: absolute;
+                inset: 0;
+            }
+
+            .page-hero-bg img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.35;
+            }
+
+            .page-hero-content {
+                position: relative;
+                z-index: 2;
+                text-align: center;
+                padding: 1rem 2rem;
+            }
+
+            .page-hero-label {
+                display: block;
+                font-size: 0.72rem;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: rgba(255,255,255,0.55);
+                margin-bottom: 0.5rem;
+            }
+
+            .page-hero-title {
+                font-family: var(--fonte-serif);
+                font-size: clamp(1.8rem, 4vw, 2.8rem);
+                font-weight: 700;
+                color: var(--branco);
+                letter-spacing: -0.02em;
+            }
+
+            .btn-primary {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: var(--verde);
+                color: var(--branco);
+                font-family: var(--fonte-sans);
+                font-size: 0.92rem;
+                font-weight: 600;
+                padding: 13px 26px;
+                border-radius: 100px;
+                text-decoration: none;
+                transition: background var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+                box-shadow: 0 2px 12px rgba(45, 122, 95, 0.38);
+            }
+
+            .btn-primary:hover {
+                background: var(--verde-claro);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(45, 122, 95, 0.48);
+            }
+
+            .btn-primary:active { transform: translateY(0); }
+        </style>
     </body>
 </html>

@@ -8,40 +8,208 @@ type Depoimento = {
     texto: string;
 };
 
-// Busca todos os depoimentos, ordenados pelos mais novos
 const query = `*[_type == "depoimento"] | order(_createdAt desc)`;
 const depoimentos = await client.fetch<Depoimento[]>(query);
 ---
 
 <LayoutBase title="Depoimentos de Pacientes">
-    <h1 class="text-4xl font-bold text-blue-900 mb-8 text-center">
-        O que meus pacientes dizem
-    </h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {
-            depoimentos.map((depoimento) => (
-                <blockquote class="bg-white p-6 rounded-lg shadow-lg flex flex-col">
-                    {/* Ícone de Aspas (Estético) */}
-                    <svg
-                        class="w-10 h-10 text-blue-100 mb-4"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z" />
-                    </svg>
+	<header class="dep-header">
+		<span class="eyebrow">Histórias reais</span>
+		<h1 class="dep-titulo">O que meus pacientes dizem</h1>
+		<p class="dep-sub">
+			A maior satisfação é ver cada paciente recuperar sua qualidade de vida.
+		</p>
+	</header>
 
-                    <p class="text-gray-700 italic flex-grow mb-6">
-                        "{depoimento.texto}"
-                    </p>
+	{depoimentos.length > 0 ? (
+		<ul class="dep-grid" role="list">
+			{depoimentos.map((d, i) => (
+				<li class="dep-card" style={`--i:${i}`}>
+					<svg
+						class="dep-aspas"
+						viewBox="0 0 40 32"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+						aria-hidden="true"
+						width="40"
+						height="32"
+					>
+						<path d="M0 32V19.2C0 8.533 5.333 2.133 16 0l2.4 4C13.067 5.333 10.133 8.533 9.6 13.6H16V32H0zm24 0V19.2C24 8.533 29.333 2.133 40 0l2.4 4C37.067 5.333 34.133 8.533 33.6 13.6H40V32H24z" fill="currentColor"/>
+					</svg>
 
-                    <footer class="text-right">
-                        <cite class="font-bold text-blue-800 not-italic">
-                            - {depoimento.nome}
-                        </cite>
-                    </footer>
-                </blockquote>
-            ))
-        }
-    </div>
+					<blockquote class="dep-texto">
+						{d.texto}
+					</blockquote>
+
+					<footer class="dep-autor">
+						<div class="dep-avatar" aria-hidden="true">
+							{d.nome.charAt(0).toUpperCase()}
+						</div>
+						<cite class="dep-nome">{d.nome}</cite>
+					</footer>
+				</li>
+			))}
+		</ul>
+	) : (
+		<p class="dep-vazio">Nenhum depoimento cadastrado ainda.</p>
+	)}
+
+	<div class="dep-cta">
+		<div class="dep-cta-inner">
+			<h2>Pronto para ser o próximo?</h2>
+			<p>Agende sua avaliação e dê o primeiro passo para sua recuperação.</p>
+			<a href="/contato" class="btn-primary">Agendar avaliação</a>
+		</div>
+	</div>
 </LayoutBase>
+
+<style>
+	/* Header */
+	.dep-header {
+		text-align: center;
+		margin-bottom: 3rem;
+		max-width: 560px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.eyebrow {
+		display: inline-block;
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--verde);
+		margin-bottom: 0.75rem;
+	}
+
+	.dep-titulo {
+		font-family: var(--fonte-serif);
+		font-size: clamp(1.8rem, 4vw, 2.8rem);
+		font-weight: 700;
+		color: var(--texto);
+		letter-spacing: -0.02em;
+		margin-bottom: 0.75rem;
+	}
+
+	.dep-sub {
+		font-size: 1rem;
+		color: var(--texto-muted);
+		line-height: 1.65;
+	}
+
+	/* Grid */
+	.dep-grid {
+		list-style: none;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 1.5rem;
+		margin-bottom: 4rem;
+	}
+
+	.dep-card {
+		background: var(--branco);
+		border: 1px solid var(--borda);
+		border-radius: var(--raio-lg);
+		padding: 2rem 1.75rem 1.75rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		box-shadow: var(--sombra-sm);
+		transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+		opacity: 0;
+		animation: fadeUp 0.45s var(--ease) forwards;
+		animation-delay: calc(var(--i, 0) * 80ms + 80ms);
+	}
+
+	@keyframes fadeUp {
+		from { opacity: 0; transform: translateY(16px); }
+		to   { opacity: 1; transform: translateY(0); }
+	}
+
+	.dep-card:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--sombra-md);
+		border-color: var(--verde-mid);
+	}
+
+	.dep-aspas {
+		color: var(--verde-mid);
+		flex-shrink: 0;
+	}
+
+	.dep-texto {
+		font-size: 0.95rem;
+		color: var(--texto);
+		line-height: 1.75;
+		font-style: italic;
+		flex: 1;
+	}
+
+	.dep-autor {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding-top: 1rem;
+		border-top: 1px solid var(--borda);
+	}
+
+	.dep-avatar {
+		width: 38px;
+		height: 38px;
+		border-radius: 50%;
+		background: var(--verde-suave);
+		color: var(--verde);
+		font-weight: 700;
+		font-size: 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		font-family: var(--fonte-serif);
+	}
+
+	.dep-nome {
+		font-style: normal;
+		font-weight: 600;
+		font-size: 0.92rem;
+		color: var(--texto);
+	}
+
+	.dep-vazio {
+		text-align: center;
+		color: var(--texto-muted);
+		padding: 4rem 0;
+	}
+
+	/* CTA */
+	.dep-cta {
+		background: var(--texto);
+		border-radius: var(--raio-xl);
+		overflow: hidden;
+	}
+
+	.dep-cta-inner {
+		padding: clamp(2.5rem, 6vw, 4rem);
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.dep-cta h2 {
+		font-family: var(--fonte-serif);
+		font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+		font-weight: 700;
+		color: var(--branco);
+		letter-spacing: -0.02em;
+	}
+
+	.dep-cta p {
+		color: rgba(255,255,255,0.60);
+		font-size: 0.95rem;
+		margin-bottom: 0.5rem;
+	}
+</style>

@@ -3,21 +3,184 @@
 import LayoutBase from "../layouts/LayoutBase.astro";
 ---
 
-<LayoutBase title="Obrigado!">
-    <section
-        class="text-center bg-white p-12 md:p-16 rounded-lg shadow-md max-w-2xl mx-auto"
-    >
-        <h1 class="text-4xl font-bold text-blue-900 mb-4">
-            Mensagem Recebida!
-        </h1>
-        <p class="text-lg text-gray-700 mb-8">
-            Obrigado por entrar em contato. Responderemos o mais breve possível.
-        </p>
-        <a
-            href="/"
-            class="bg-blue-700 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-800"
-        >
-            Voltar para a Página Inicial
-        </a>
-    </section>
+<LayoutBase title="Mensagem Recebida!">
+	<section class="obrigado-wrap" aria-labelledby="obrigado-titulo">
+		<div class="obrigado-card">
+			<!-- Ícone animado -->
+			<div class="check-circle" aria-hidden="true">
+				<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+					<polyline points="20 6 9 17 4 12"/>
+				</svg>
+			</div>
+
+			<span class="obrigado-eyebrow">Tudo certo!</span>
+			<h1 id="obrigado-titulo" class="obrigado-titulo">Mensagem Recebida</h1>
+			<p class="obrigado-texto">
+				Obrigado por entrar em contato. Retornaremos o mais breve possível —
+				geralmente em até 24 horas nos dias úteis.
+			</p>
+
+			<div class="obrigado-divider" aria-hidden="true"></div>
+
+			<p class="obrigado-dica">
+				Precisa de resposta rápida? Fale diretamente pelo WhatsApp:
+			</p>
+
+			<div class="obrigado-acoes">
+				<a
+					href="https://wa.me/5528999249583?text=Olá!%20Acabei%20de%20enviar%20uma%20mensagem%20pelo%20site."
+					target="_blank"
+					rel="noopener noreferrer"
+					class="btn-whatsapp"
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L.057 23.571a.75.75 0 0 0 .921.921l5.713-1.478A11.947 11.947 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.706 9.706 0 0 1-4.95-1.357l-.355-.21-3.681.951.977-3.566-.232-.368A9.706 9.706 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+					Falar pelo WhatsApp
+				</a>
+				<a href="/" class="btn-voltar">
+					← Voltar ao início
+				</a>
+			</div>
+		</div>
+	</section>
 </LayoutBase>
+
+<style>
+	.obrigado-wrap {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 60vh;
+		padding: 2rem 0;
+	}
+
+	.obrigado-card {
+		background: var(--branco);
+		border: 1px solid var(--borda);
+		border-radius: var(--raio-xl);
+		padding: clamp(2.5rem, 7vw, 4.5rem);
+		max-width: 540px;
+		width: 100%;
+		text-align: center;
+		box-shadow: var(--sombra-md);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+		animation: cardAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+	}
+
+	@keyframes cardAppear {
+		from { opacity: 0; transform: scale(0.94) translateY(16px); }
+		to   { opacity: 1; transform: scale(1) translateY(0); }
+	}
+
+	/* Ícone de check animado */
+	.check-circle {
+		width: 72px;
+		height: 72px;
+		background: var(--verde-suave);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--verde);
+		margin-bottom: 0.5rem;
+		animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+	}
+
+	@keyframes popIn {
+		from { opacity: 0; transform: scale(0.5); }
+		to   { opacity: 1; transform: scale(1); }
+	}
+
+	.check-circle svg {
+		stroke-dasharray: 50;
+		stroke-dashoffset: 50;
+		animation: drawCheck 0.5s ease 0.4s forwards;
+	}
+
+	@keyframes drawCheck {
+		to { stroke-dashoffset: 0; }
+	}
+
+	.obrigado-eyebrow {
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--verde);
+	}
+
+	.obrigado-titulo {
+		font-family: var(--fonte-serif);
+		font-size: clamp(1.7rem, 4vw, 2.4rem);
+		font-weight: 700;
+		color: var(--texto);
+		letter-spacing: -0.02em;
+		line-height: 1.15;
+	}
+
+	.obrigado-texto {
+		font-size: 1rem;
+		color: var(--texto-muted);
+		line-height: 1.7;
+		max-width: 400px;
+	}
+
+	.obrigado-divider {
+		width: 48px;
+		height: 2px;
+		background: var(--borda);
+		border-radius: 2px;
+		margin: 0.75rem 0;
+	}
+
+	.obrigado-dica {
+		font-size: 0.88rem;
+		color: var(--texto-muted);
+	}
+
+	.obrigado-acoes {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		margin-top: 0.5rem;
+	}
+
+	.btn-whatsapp {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		background: #25d366;
+		color: #fff;
+		font-size: 0.92rem;
+		font-weight: 600;
+		padding: 12px 22px;
+		border-radius: 100px;
+		text-decoration: none;
+		transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+		box-shadow: 0 2px 12px rgba(37, 211, 102, 0.38);
+	}
+
+	.btn-whatsapp:hover {
+		background: #20ba5a;
+		transform: translateY(-2px);
+	}
+
+	.btn-voltar {
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--texto-muted);
+		text-decoration: none;
+		padding: 10px 16px;
+		border-radius: 100px;
+		transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+	}
+
+	.btn-voltar:hover {
+		color: var(--verde);
+		background: var(--verde-suave);
+	}
+</style>
